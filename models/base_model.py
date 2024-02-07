@@ -5,7 +5,7 @@ from datetime import datetime
 class BaseModel:
     
     def __init__(self, *args, **kwargs):
-        if kwargs is True:
+        if kwargs:
             for k, v in kwargs.items():
                 if k == "created_at":
                     v = datetime.fromisoformat(v)

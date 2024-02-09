@@ -7,10 +7,10 @@ from models.base_model import BaseModel
 
 class FileStorage:
     """FileStorage class to implement de- and serialization"""
-    
+
     __file_path = "file.json"
     __objects = {}
-    
+
     def fetch_subclasses(self, cls):
         """Fetches all the subclasses that in inherits cls
 
@@ -19,7 +19,7 @@ class FileStorage:
         """
         subclasses = set([cls]).union(cls.__subclasses__())
         return {c.__name__: c for c in subclasses}
-        
+
     def all(self):
         """Returns all objects loaded from storage
 
@@ -27,7 +27,7 @@ class FileStorage:
             dict: a dictionary of all objects
         """
         return self.__objects
-    
+
     def new(self, obj):
         """Makes a key from object class and id
         ex. <cls.name>.<obj.id>
@@ -37,13 +37,14 @@ class FileStorage:
         """
         key = f"{obj.__class__.__name__}.{obj.id}"
         self.__objects[key] = obj
-        
+
     def save(self):
         """Serializes objects stored in the self.__objects in to a file
         """
         with open(self.__file_path, "w") as f:
-            json.dump({key: value.to_dict() for key, value in self.__objects.items()}, f)
-            
+            json.dump({key: value.to_dict()
+                       for key, value in self.__objects.items()}, f)
+
     def reload(self):
         """Deserializes objects from a file into self.__objects dictionary
         """

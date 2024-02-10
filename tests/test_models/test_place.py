@@ -47,6 +47,17 @@ class TestPlace(unittest.TestCase):
 
         """Checking instances of each instance"""
         self.assertIsInstance(Place1.id, str)
+        self.assertIsInstance(Place1.name, str)
+        self.assertIsInstance(Place1.user_id, str)
+        self.assertIsInstance(Place1.city_id, str)
+        self.assertIsInstance(Place1.max_guest, int)
+        self.assertIsInstance(Place1.latitude, float)
+        self.assertIsInstance(Place1.amenity_ids, list)
+        self.assertIsInstance(Place1.longitude, float)
+        self.assertIsInstance(Place1.description, str)
+        self.assertIsInstance(Place1.number_rooms, int)
+        self.assertIsInstance(Place1.price_by_night, int)
+        self.assertIsInstance(Place1.number_bathrooms, int)
         self.assertIsInstance(Place1.created_at, datetime.datetime)
         self.assertIsInstance(Place1.updated_at, datetime.datetime)
 

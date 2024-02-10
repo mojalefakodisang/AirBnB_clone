@@ -47,7 +47,10 @@ class TestUser(unittest.TestCase):
 
         """Checking instances of each instance"""
         self.assertIsInstance(user1.id, str)
-        self.assertIsInstance(user1.created_at, datetime.datetime)
+        self.assertIsInstance(user1.email, str)
+        self.assertIsInstance(user1.password, str)
+        self.assertIsInstance(user1.last_name, str)
+        self.assertIsInstance(user1.first_name, str)
         self.assertIsInstance(user1.updated_at, datetime.datetime)
 
     def test_user_initialization_argument(self):

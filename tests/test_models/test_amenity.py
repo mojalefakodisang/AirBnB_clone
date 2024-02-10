@@ -47,6 +47,7 @@ class TestAmenity(unittest.TestCase):
 
         """Checking instances of each instance"""
         self.assertIsInstance(Amenity1.id, str)
+        self.assertIsInstance(Amenity1.name, str)
         self.assertIsInstance(Amenity1.created_at, datetime.datetime)
         self.assertIsInstance(Amenity1.updated_at, datetime.datetime)
 

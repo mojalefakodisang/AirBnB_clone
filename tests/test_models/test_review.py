@@ -47,6 +47,9 @@ class TestReview(unittest.TestCase):
 
         """Checking instances of each instance"""
         self.assertIsInstance(Review1.id, str)
+        self.assertIsInstance(Review1.text, str)
+        self.assertIsInstance(Review1.user_id, str)
+        self.assertIsInstance(Review1.place_id, str)
         self.assertIsInstance(Review1.created_at, datetime.datetime)
         self.assertIsInstance(Review1.updated_at, datetime.datetime)
 

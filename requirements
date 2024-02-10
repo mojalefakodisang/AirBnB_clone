@@ -67,6 +67,7 @@ File_executable() {
         then
             echo -e "\t${GREEN}OK${NC}"
         else
+            chmod +x "$file"
             echo -e "\t${RED}Failed${NC}"
         fi
     done

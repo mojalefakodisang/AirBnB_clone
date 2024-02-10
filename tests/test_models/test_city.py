@@ -47,6 +47,7 @@ class TestCity(unittest.TestCase):
 
         """Checking instances of each instance"""
         self.assertIsInstance(City1.id, str)
+        self.assertIsInstance(City1.name, str)
         self.assertIsInstance(City1.created_at, datetime.datetime)
         self.assertIsInstance(City1.updated_at, datetime.datetime)
 

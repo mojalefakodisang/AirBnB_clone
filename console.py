@@ -9,6 +9,18 @@ class HBNBCommand(cmd.Cmd):
     """Class that implements the console"""
 
     prompt = "(hbnb) "
+    __from_match = False
+
+    def get_class(self, name):
+        """Gets a class ready for initialization
+
+        Args:
+            name (str): name of the class
+
+        Returns:
+            class: returns a class matching name of the class
+        """
+        return models.storage.fetch_subclasses(BaseModel).get(name)
 
     def handle_args_err(self, args, exp_len=1, all=False):
         """Handles errors and tokenize arguments
@@ -25,19 +37,18 @@ class HBNBCommand(cmd.Cmd):
         err = False
         args = args.split()
         objects = models.storage.all()
-        subclasses = models.storage.fetch_subclasses(BaseModel)
-        if len(args) == 0 and not all:
+        if not args and not all:
             err = True
             print("** class name missing **")
-        elif not all and args[0] not in subclasses:
+        elif args and not self.get_class(args[0]):
             err = True
             print("** class doesn't exist **")
-        elif len(args) < 2 and exp_len >= 2:
+        elif len(args) == 1 and exp_len >= 2:
             err = True
             print("** instance id missing **")
         elif all:
             if len(args) > 0:
-                if args[0] not in subclasses:
+                if not self.get_class(args[0]):
                     err = True
                     print("** class doesn't exist **")
         elif exp_len >= 2 and not all:
@@ -63,8 +74,9 @@ class HBNBCommand(cmd.Cmd):
             args (str): arguments
         """
         err, line = self.handle_args_err(args)
-        if not err:
-            new_instance = BaseModel()
+        if not err and self.get_class(line[0]):
+            my_class = self.get_class(line[0])
+            new_instance = my_class()
             print(new_instance.id)
             new_instance.save()
 
@@ -108,10 +120,17 @@ class HBNBCommand(cmd.Cmd):
         all_list = []
         err, line = self.handle_args_err(args, 0, True)
         if not err:
-            objects = models.storage.all()
-            for obj in objects.values():
-                all_list.append(str(obj))
-            print(all_list)
+            all_objects = [obj for k, obj in models.storage.all().items()]
+
+            if line:
+                all_objects = [obj for obj in all_objects
+                               if obj.__class__.__name__ == line[0]]
+
+            obj_str = [obj.__str__() for obj in all_objects]
+            if self.__from_match:
+                print("[" + ", ".join(obj_str) + "]")
+            else:
+                print(obj_str)
 
     def do_update(self, args):
         """Updates instance
@@ -144,5 +163,5 @@ class HBNBCommand(cmd.Cmd):
         pass
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     HBNBCommand().cmdloop()

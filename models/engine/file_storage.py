@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/python3
 """file_storage module with FileStorage class"""
 import os
 import json

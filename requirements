@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+NC='\033[0m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+files=$(find . -type f -name "*.py" ! -name "__init__.py")
+
+echo -e "${RED}Requirements Checker${NC}\n"
+
+read_me_file() {
+    file=$(find . -maxdepth 1 -name "README.md")
+
+    echo -e "${RED}README.md${NC}"
+
+    if [ -z "$file" ]
+    then
+        echo -e "README.md: ${RED}NOT FOUND${NC}"
+    else
+        echo -e "README.md: ${GREEN}FOUND${NC}"
+    fi
+    echo -e "\n"
+}
+
+Pycodestyle() {
+    echo -e "${RED}Pycodestyle Checker${NC}"
+    for file in $files;
+    do
+        echo -e "$file" | tr -d '\n'
+        output=$(pycodestyle "$file")
+        if [ $? -ne 0 ];
+        then
+            echo "$output"
+        else
+            echo -e "\t${GREEN}OK${NC}"
+        fi
+    done
+    echo -e "\n"
+}
+
+Check_interpreter() {
+    interpreter="#!/usr/bin/python3"
+    echo -e "${RED}Interpreter Checker${NC}"
+
+    for file in $files
+    do
+        check=$(cat < "$file" | head -1)
+        echo -e "$file" | tr -d '\n'
+        if [ "$check" == "$interpreter" ]
+        then
+            echo -e "\t${GREEN}OK${NC}"
+        else
+            echo -e "$( cat < "$file" | head -1 )"
+            echo -e "\t${RED}Failed${NC}"
+        fi
+    done
+    echo -e "\n"
+}
+
+File_executable() {
+    for file in $files
+    do
+        file_to_check="$file"
+        echo -e "$file" | tr -d '\n'
+        if [ -x "$file_to_check" ]
+        then
+            echo -e "\t${GREEN}OK${NC}"
+        else
+            echo -e "\t${RED}Failed${NC}"
+        fi
+    done
+    echo -e "\n"
+}
+
+Check_interpreter
+File_executable
+Pycodestyle

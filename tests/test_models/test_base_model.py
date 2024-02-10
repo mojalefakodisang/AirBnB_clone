@@ -8,7 +8,7 @@ from models.base_model import BaseModel
 class TestBaseModel(unittest.TestCase):
     """Tests the BaseModel class."""
 
-    #-------------------- Tests for #3---------------------------
+    """-------------------- Tests for #3---------------------------"""
     def test_init(self):
         """Tests BaseModel instanciation"""
         model = BaseModel()
@@ -33,6 +33,7 @@ class TestBaseModel(unittest.TestCase):
         model.save()
 
         self.assertNotEqual(model.updated_at, updated)
+
     def test_to_dict(self):
         """Tests the returned dictionary after calling to_dict method"""
         model = BaseModel()
@@ -44,13 +45,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertTrue(isinstance(new_dic["created_at"], str))
         self.assertTrue(isinstance(new_dic["updated_at"], str))
 
-    #-------------------- Tests for #4 --------------------
+    """-------------------- Tests for #4 --------------------"""
     def test_init_kwargs(self):
         """Tests the instanciation with kwargs"""
         model = BaseModel()
-        model_json= model.to_dict()
+        model_json = model.to_dict()
         new_model = BaseModel(**model_json)
-        
+
         self.assertFalse(new_model is model)
         self.assertNotIn("__class__", new_model.__dict__)
         self.assertEqual(model.to_dict(), new_model.to_dict())

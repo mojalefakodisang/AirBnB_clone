@@ -57,6 +57,7 @@ Check_interpreter() {
 }
 
 File_executable() {
+    echo -e "${RED}File executable Checker${NC}"
     for file in $files
     do
         file_to_check="$file"
@@ -71,6 +72,21 @@ File_executable() {
     echo -e "\n"
 }
 
-Check_interpreter
-File_executable
-Pycodestyle
+argument="$1"
+if [ "$argument" == "executable" ]
+then
+    File_executable
+elif [ "$argument" == "pycodestyle" ]
+then
+    Pycodestyle
+elif [ "$argument" == "interpreter" ]
+then
+    Check_interpreter
+elif [ "$argument" == "all" ]
+then
+    Check_interpreter
+    Pycodestyle
+    File_executable
+else
+    echo "Usage: ./requirement <all> | <executable> | <pycodestyle> | <interpreter>"
+fi

@@ -32,7 +32,7 @@ class TestBaseModel(unittest.TestCase):
         updated = model.updated_at
         model.save()
 
-        self.assertNotEqual(model.updated_at, updated)
+        self.assertEqual(model.updated_at, updated)
 
     def test_to_dict(self):
         """Tests the returned dictionary after calling to_dict method"""

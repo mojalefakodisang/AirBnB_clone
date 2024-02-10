@@ -25,12 +25,13 @@ Pycodestyle() {
     echo -e "${RED}Pycodestyle Checker${NC}"
     for file in $files;
     do
-        echo -e "$file" | tr -d '\n'
         output=$(pycodestyle "$file")
         if [ $? -ne 0 ];
         then
-            echo "$output"
+            echo -e "\$output"
+            echo -e "\t${RED}Failed${NC}"
         else
+            echo -e "$file" | tr -d '\n'
             echo -e "\t${GREEN}OK${NC}"
         fi
     done

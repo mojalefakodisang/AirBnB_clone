@@ -2,14 +2,19 @@
 """file_storage module with FileStorage class"""
 import os
 import json
+from models.user import User
+from models.city import City
+from models.state import State
+from models.place import Place
+from models.amenity import Amenity
 from models.base_model import BaseModel
 
 
 class FileStorage:
     """FileStorage class to implement de- and serialization"""
 
-    __file_path = "file.json"
     __objects = {}
+    __file_path = "file.json"
 
     def fetch_subclasses(self, cls):
         """Fetches all the subclasses that in inherits cls
@@ -53,4 +58,5 @@ class FileStorage:
             with open(self.__file_path, "r") as f:
                 objects = json.load(f)
                 self.__objects = {k: subclasses[v['__class__']](**v)
-                                  for k, v in objects.items()}
+                                  for k, v in objects.items()
+                                  if v['__class__'] in subclasses}

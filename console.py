@@ -117,7 +117,6 @@ class HBNBCommand(cmd.Cmd):
         Args:
             args (str): arguments
         """
-        all_list = []
         err, line = self.handle_args_err(args, 0, True)
         if not err:
             all_objects = [obj for k, obj in models.storage.all().items()]
@@ -139,16 +138,41 @@ class HBNBCommand(cmd.Cmd):
         Args:
             args (str): arguments
         """
-        not_update = ["id", "created_at", "updated_at"]
         err, line = self.handle_args_err(args, 4)
         if not err:
-            objects = models.storage.all()
             target_id = f"{line[0]}.{line[1]}"
-            for k, v in objects.items():
-                if k == target_id:
-                    if args[2] not in not_update:
-                        setattr(v, line[2], line[3])
-                        v.save()
+            dict_target_id = models.storage.all().get(target_id)
+            value = getattr(dict_target_id, line[2], None)
+            if value is not None:
+                value_type = type(value)
+            else:
+                value_type = None
+
+            if value_type:
+                new_value = value_type(line[3])
+            else:
+                new_value = self.cast_to_type(line[3])
+            setattr(dict_target_id, line[3], new_value)
+
+    def cast_to_type(self, value, dtype=None):
+        """Casts the value of an attribute"""
+        try:
+            if dtype is not None:
+                return dtype(value)
+            elif "." in value:
+                return float(value)
+            else:
+                return int(value)
+        except (ValueError, TypeError) as e:
+            if dtype and dtype == int:
+                try:
+                    return dtype(float(value))
+                except Exception:
+                    pass
+            elif not dtype:
+                return value
+            else:
+                pass
 
     def do_quit(self, args):
         """Quits or exits the console"""

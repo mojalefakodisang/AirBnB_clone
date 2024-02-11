@@ -28,7 +28,7 @@ Pycodestyle() {
         output=$(pycodestyle "$file")
         if [ $? -ne 0 ];
         then
-            echo -e "\$output"
+            echo -e "$output"
             echo -e "\t${RED}Failed${NC}"
         else
             echo -e "$file" | tr -d '\n'

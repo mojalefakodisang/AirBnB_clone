@@ -168,7 +168,11 @@ class HBNBCommand(cmd.Cmd):
                 instance = models.storage.all().get(target_id)
 
                 attr_value = getattr(instance, line[2], None)
-                type_attr = type(attr_value) if attr_value is not None else None
+                if attr_value is not None:
+                    type_attr = type(attr_value)
+                else:
+                    type_attr = None
+
                 if type_attr:
                     new_value = type_attr(line[3])
                 else:

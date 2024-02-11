@@ -30,7 +30,8 @@ class testFileStorage(unittest.TestCase):
 
     # -------------------- Tests for #5--------------------
     def test_instanciation(self):
-        """Test FileStorage instanciation"""
+        """Test FileStorage instanciation
+        and that the attributes are callable"""
         new = FileStorage()
 
         self.assertIsInstance(new, FileStorage)

@@ -12,12 +12,32 @@ import unittest
 class testFileStorage(unittest.TestCase):
     """Tests for FileStorage class"""
 
+    def test_docs(self):
+        """Checking for documentation of the file"""
+        file_storage = __import__('models.engine.file_storage')
+        all_method_doc = file_storage.FileStorage.all.__doc__
+        new_method_doc = file_storage.FileStorage.new.__doc__
+        save_method_doc = file_storage.FileStorage.save.__doc__
+        reload_method_doc = file_storage.FileStorage.reload.__doc__
+
+        class_doc = file_storage.FileStorage.__doc__
+
+        self.assertTrue(class_doc and len(class_doc) > 0)
+        self.assertTrue(all_method_doc and len(all_method_doc) > 0)
+        self.assertTrue(new_method_doc and len(new_method_doc) > 0)
+        self.assertTrue(save_method_doc and len(save_method_doc) > 0)
+        self.assertTrue(reload_method_doc and len(reload_method_doc) > 0)
+
     # -------------------- Tests for #5--------------------
     def test_instanciation(self):
         """Test FileStorage instanciation"""
         new = FileStorage()
 
         self.assertIsInstance(new, FileStorage)
+        self.assertIsNotNone(FileStorage.all)
+        self.assertIsNotNone(FileStorage.new)
+        self.assertIsNotNone(FileStorage.save)
+        self.assertIsNotNone(FileStorage.reload)
 
     def self_file_path(self):
         """Test for the __file_path attribute"""

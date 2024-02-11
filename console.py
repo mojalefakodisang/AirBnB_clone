@@ -22,6 +22,26 @@ class HBNBCommand(cmd.Cmd):
         """
         return models.storage.fetch_subclasses(BaseModel).get(name)
 
+    def cast_attr(self, value, dtype=None):
+        """Casts an attribute"""
+        try:
+            if dtype is not None:
+                return dtype(value)
+            elif "." in value:
+                return float(value)
+            else:
+                return int(value)
+        except (TypeError, ValueError) as e:
+            if dtype and dtype == int:
+                try:
+                    return dtype(float(value))
+                except Exception:
+                    pass
+            elif not dtype:
+                return value
+            else:
+                pass
+
     def handle_args_err(self, args, exp_len=1, all=False):
         """Handles errors and tokenize arguments
 
@@ -53,6 +73,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
         elif exp_len >= 2 and not all:
             target_id = f"{args[0]}.{args[1]}"
+            objects = models.storage.all()
             if target_id not in objects.keys():
                 err = True
                 print("** no instance found **")
@@ -142,13 +163,16 @@ class HBNBCommand(cmd.Cmd):
         not_update = ["id", "created_at", "updated_at"]
         err, line = self.handle_args_err(args, 4)
         if not err:
-            objects = models.storage.all()
             target_id = f"{line[0]}.{line[1]}"
-            for k, v in objects.items():
-                if k == target_id:
-                    if args[2] not in not_update:
-                        setattr(v, line[2], line[3])
-                        v.save()
+            instance = models.storage.all().get(target_id)
+            attr_value = getattr(instance, args[2], None)
+            type_attr = type(attr_value) if attr_value is not None else None
+
+            if type_attr:
+                line[3] = type_attr(line[3])
+            else:
+                line[3] = self.cast_attr(line[3])
+
 
     def do_quit(self, args):
         """Quits or exits the console"""

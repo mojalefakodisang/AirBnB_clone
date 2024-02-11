@@ -65,8 +65,13 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save(self):
         """Tests that save method is called"""
+        
         model = BaseModel()
         model.save()
+        k = f"{type(model).__name__}.{model.id}"
+        new_dict = {k: model.to_dict()}
+
+        self.assertTrue(os.path.isfile(FileStorage._FileStorage__file_path))
 
         with open("file.json", "r") as f:
             self.assertIn(model.id, f.read())

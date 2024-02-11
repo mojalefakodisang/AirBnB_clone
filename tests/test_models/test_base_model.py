@@ -64,6 +64,15 @@ class TestBaseModel(unittest.TestCase):
 
     """-------------------- Tests for #5 --------------------"""
 
+    def test_save_updates(self):
+        """Tests the save method after the updates"""
+        model = BaseModel()
+        time = model.updated_at
+        model.save()
+        new_time = model.updated_at
+
+        self.assertNotEqual(time, new_time)
+
     def test_save(self):
         """Tests that save method is called"""
 

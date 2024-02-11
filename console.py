@@ -22,6 +22,26 @@ class HBNBCommand(cmd.Cmd):
         """
         return models.storage.fetch_subclasses(BaseModel).get(name)
 
+    def cast_attr(self, value, dtype=None):
+        """Casts an attribute"""
+        try:
+            if dtype is not None:
+                return dtype(value)
+            elif "." in value:
+                return float(value)
+            else:
+                return int(value)
+        except (TypeError, ValueError) as e:
+            if dtype and dtype == int:
+                try:
+                    return dtype(float(value))
+                except Exception:
+                    pass
+            elif not dtype:
+                return value
+            else:
+                pass
+
     def handle_args_err(self, args, exp_len=1, all=False):
         """Handles errors and tokenize arguments
 
@@ -53,6 +73,7 @@ class HBNBCommand(cmd.Cmd):
                     print("** class doesn't exist **")
         elif exp_len >= 2 and not all:
             target_id = f"{args[0]}.{args[1]}"
+            objects = models.storage.all()
             if target_id not in objects.keys():
                 err = True
                 print("** no instance found **")
@@ -142,12 +163,20 @@ class HBNBCommand(cmd.Cmd):
         not_update = ["id", "created_at", "updated_at"]
         err, line = self.handle_args_err(args, 4)
         if not err:
-            objects = models.storage.all()
             target_id = f"{line[0]}.{line[1]}"
+            objects = models.storage.all()
+            instance = models.storage.all().get(target_id)
+            attr_value = getattr(instance, line[2], None)
+            attr_type = type(attr_value) if attr_value is not None else None
+
+            if attr_type:
+                new_value = attr_type(line[3])
+            else:
+                new_value = self.cast_attr(line[3])
             for k, v in objects.items():
                 if k == target_id:
-                    if args[2] not in not_update:
-                        setattr(v, line[2], line[3])
+                    if line[2] not in not_update:
+                        setattr(v, line[2], new_value)
                         v.save()
 
     def do_quit(self, args):

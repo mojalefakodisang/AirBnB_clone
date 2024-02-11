@@ -33,7 +33,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn(str(model.__dict__), str(model))
 
     def test_save(self):
-        """Tests if the updated attribute is updated"""
+        """Tests if the updated_at attribute is updated"""
         model = BaseModel()
         updated = model.updated_at
         model.save()

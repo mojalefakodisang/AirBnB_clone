@@ -87,7 +87,7 @@ class TestBaseModel(unittest.TestCase):
             self.assertIn(model.id, f.read())
 
     def test_save_subclass(self):
-        """Testing saving subclasses of BaseModel"""
+        """Testing saving subclasses of BaseModel class"""
         class1 = User()
         class1.save()
 

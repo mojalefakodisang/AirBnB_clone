@@ -61,6 +61,8 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(new_model.created_at, datetime.datetime)
         self.assertIsInstance(new_model.updated_at, datetime.datetime)
 
+    """-------------------- Tests for #5 --------------------"""
+
     def test_save(self):
         """Tests that save method is called"""
         model = BaseModel()

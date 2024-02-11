@@ -3,6 +3,9 @@
 import datetime
 import unittest
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
+import models
+import os
 
 
 class TestBaseModel(unittest.TestCase):
@@ -57,6 +60,14 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(model.to_dict(), new_model.to_dict())
         self.assertIsInstance(new_model.created_at, datetime.datetime)
         self.assertIsInstance(new_model.updated_at, datetime.datetime)
+
+    def test_save(self):
+        """Tests that save method is called"""
+        model = BaseModel()
+        model.save()
+
+        with open("file.json", "r") as f:
+            self.assertIn(model.id, f.read())
 
 
 if __name__ == "__main__":

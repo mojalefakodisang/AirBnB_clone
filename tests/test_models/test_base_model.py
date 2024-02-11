@@ -65,7 +65,7 @@ class TestBaseModel(unittest.TestCase):
     """-------------------- Tests for #5 --------------------"""
 
     def test_save_updates(self):
-        """Tests the save method after the updates"""
+        """Tests the save method after the updated_at"""
         model = BaseModel()
         time = model.updated_at
         model.save()

@@ -3,7 +3,9 @@
 
 ## Description of the project
 
-This is a team work project called "AirBnB_clone". AUTHORS:
+This is a team work project called "AirBnB_clone". 
+
+AUTHORS:
 - Mojalefa Kodisang
 - Habiba Zguaid
 

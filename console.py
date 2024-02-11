@@ -163,22 +163,21 @@ class HBNBCommand(cmd.Cmd):
         not_update = ["id", "created_at", "updated_at"]
         err, line = self.handle_args_err(args, 4)
         if not err:
-            if line[2] in not_update:
-                target_id = f"{line[0]}.{line[1]}"
-                instance = models.storage.all().get(target_id)
+            target_id = f"{line[0]}.{line[1]}"
+            objects = models.storage.all()
+            instance = models.storage.all().get(target_id)
+            attr_value = getattr(instance, line[2], None)
+            attr_type = type(attr_value) if attr_value is not None else None
 
-                attr_value = getattr(instance, line[2], None)
-                if attr_value is not None:
-                    type_attr = type(attr_value)
-                else:
-                    type_attr = None
-
-                if type_attr:
-                    new_value = type_attr(line[3])
-                else:
-                    new_value = self.cast_attr(line[3])
-                setattr(instance, line[2], new_value)
-                models.storage.save()
+            if attr_type:
+                new_value = attr_type(line[3])
+            else:
+                new_value = self.cast_attr(line[3])
+            for k, v in objects.items():
+                if k == target_id:
+                    if line[2] not in not_update:
+                        setattr(v, line[2], new_value)
+                        v.save()
 
     def do_quit(self, args):
         """Quits or exits the console"""

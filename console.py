@@ -173,7 +173,6 @@ class HBNBCommand(cmd.Cmd):
             else:
                 line[3] = self.cast_attr(line[3])
 
-
     def do_quit(self, args):
         """Quits or exits the console"""
         return True

@@ -169,9 +169,11 @@ class HBNBCommand(cmd.Cmd):
             type_attr = type(attr_value) if attr_value is not None else None
 
             if type_attr:
-                line[3] = type_attr(line[3])
+                new_value = type_attr(line[3])
             else:
-                line[3] = self.cast_attr(line[3])
+                new_value = self.cast_attr(line[3])
+            setattr(instance, line[3], new_value)
+            models.storage.save()
 
     def do_quit(self, args):
         """Quits or exits the console"""

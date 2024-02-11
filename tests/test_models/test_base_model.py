@@ -1,11 +1,12 @@
 #!/usr/bin/python3
 '''Module for unittesting of the BaseModel class'''
-import datetime
+import os
+import models
 import unittest
+import datetime
+from models.user import User
 from models.base_model import BaseModel
 from models.engine.file_storage import FileStorage
-import models
-import os
 
 
 class TestBaseModel(unittest.TestCase):
@@ -75,6 +76,14 @@ class TestBaseModel(unittest.TestCase):
 
         with open("file.json", "r") as f:
             self.assertIn(model.id, f.read())
+
+    def test_save_subclass(self):
+        """Testing saving subclasses of BaseModel"""
+        class1 = User()
+        class1.save()
+
+        with open("file.json", "r") as f:
+            self.assertIn(class1.id, f.read())
 
 
 if __name__ == "__main__":

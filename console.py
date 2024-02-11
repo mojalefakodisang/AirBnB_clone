@@ -165,15 +165,16 @@ class HBNBCommand(cmd.Cmd):
         if not err:
             target_id = f"{line[0]}.{line[1]}"
             instance = models.storage.all().get(target_id)
-            attr_value = getattr(instance, args[2], None)
-            type_attr = type(attr_value) if attr_value is not None else None
+            if line[2] not in not_update:
+                attr_value = getattr(instance, line[2], None)
+                type_attr = type(attr_value) if attr_value is not None else None
 
-            if type_attr:
-                new_value = type_attr(line[3])
-            else:
-                new_value = self.cast_attr(line[3])
-            setattr(instance, line[3], new_value)
-            models.storage.save()
+                if type_attr:
+                    new_value = type_attr(line[3])
+                else:
+                    new_value = self.cast_attr(line[3])
+                setattr(instance, line[2], new_value)
+                models.storage.save()
 
     def do_quit(self, args):
         """Quits or exits the console"""

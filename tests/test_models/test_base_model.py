@@ -65,7 +65,7 @@ class TestBaseModel(unittest.TestCase):
 
     def test_save(self):
         """Tests that save method is called"""
-        
+
         model = BaseModel()
         model.save()
         k = f"{type(model).__name__}.{model.id}"

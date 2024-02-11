@@ -13,7 +13,7 @@ class testFileStorage(unittest.TestCase):
     """Tests for FileStorage class"""
 
     def test_docs(self):
-        """Checking for documentation of the file"""
+        """Checking for doc strings of the file"""
         file_storage = __import__('models.engine.file_storage')
         all_method_doc = file_storage.FileStorage.all.__doc__
         new_method_doc = file_storage.FileStorage.new.__doc__

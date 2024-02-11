@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''Module for unittesting of the BaseModel class'''
+"""
+Test suite for base_model
+"""
 import os
 import models
 import unittest

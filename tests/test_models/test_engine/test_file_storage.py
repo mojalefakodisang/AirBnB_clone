@@ -3,6 +3,7 @@
 from datetime import datetime
 import json
 from models.base_model import BaseModel
+from models.engine import file_storage
 from models.engine.file_storage import FileStorage
 import models
 import os
@@ -65,13 +66,19 @@ class testFileStorage(unittest.TestCase):
 
     def test_reload(self):
         """Test for the reload method"""
-        self.storage = FileStorage()
-        obj = BaseModel()
-        self.storage.new(obj)
-        self.storage.save()
-
-        new_storage = FileStorage()
-        new_storage.reload()
+        user1 = BaseModel()
+        user1.save()
+        self.assertTrue(os.path.isfile("file.json"))
+        all_objs = models.storage.all()
+        expected = {k: v.to_dict() for k, v in all_objs.items()}
+        models.storage.reload()
+        with self.subTest():
+            output = {k: v.to_dict() for k, v in all_objs.items()}
+            self.maxDiff = None
+            self.assertEqual(output, expected)
+        with self.subTest():
+            objs = file_storage.FileStorage._FileStorage__objects
+            self.assertEqual(all_objs, objs)
 
     def test_reload_with_no_json_file(self):
         """Test to check that no exception is raised:

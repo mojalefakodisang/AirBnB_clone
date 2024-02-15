@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''Module for unittesting of the BaseModel class'''
+"""
+Test suite for base_model
+"""
 import os
 import models
 import unittest
@@ -31,7 +33,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn(str(model.__dict__), str(model))
 
     def test_save(self):
-        """Tests if the updated attribute is updated"""
+        """Tests if the updated_at attribute is updated"""
         model = BaseModel()
         updated = model.updated_at
         model.save()
@@ -64,6 +66,15 @@ class TestBaseModel(unittest.TestCase):
 
     """-------------------- Tests for #5 --------------------"""
 
+    def test_save_updates(self):
+        """Tests the save method after the updated_at"""
+        model = BaseModel()
+        time = model.updated_at
+        model.save()
+        new_time = model.updated_at
+
+        self.assertNotEqual(time, new_time)
+
     def test_save(self):
         """Tests that save method is called"""
 
@@ -78,7 +89,7 @@ class TestBaseModel(unittest.TestCase):
             self.assertIn(model.id, f.read())
 
     def test_save_subclass(self):
-        """Testing saving subclasses of BaseModel"""
+        """Testing saving subclasses of BaseModel class"""
         class1 = User()
         class1.save()
 

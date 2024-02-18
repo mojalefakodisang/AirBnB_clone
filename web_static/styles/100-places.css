@@ -1,0 +1,174 @@
+.article-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.places h1 {
+    font-size: 30px;
+    margin-bottom: 0;
+    padding-left: 10px;
+}
+
+.places article {
+    width: 390px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #FF5A5F;
+    border-radius: 4px;
+    text-align: center;
+    position: relative;
+}
+
+.places h2 {
+    font-size: 30px;
+    margin: auto;
+}
+
+.places p {
+    margin: auto;
+}
+
+.price_by_night {
+    color: #FF5A5F;
+    border: 4px solid #FF5A5F;
+    border-radius: 50%;
+    min-width: 60px;
+    height: 60px;
+    font-size: 30px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    line-height: 60px;
+}
+
+.information {
+    margin-top: 40px;
+    height: 80px;
+    border-top: 1px solid #DDDDDD;
+    border-bottom: 1px solid #DDDDDD;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.price_by_night > p {
+    font-size: 25px;
+}
+
+.max_guest,
+.number_rooms,
+.number_bathrooms {
+    width: 100px;
+    display: block;
+}
+
+.max_guest > p,
+.number_rooms > p,
+.number_bathrooms > p {
+    top: 55px;
+    position: relative;
+    justify-content: center;
+}
+
+.user,
+.description {
+    padding-top: 20px;
+    text-align: left;
+}
+
+.max_guest, .number_rooms, .number_bathrooms {
+    background-position-x: center;
+    background-position-y: calc(50% - 10px);
+}
+
+.max_guest {
+    background: no-repeat url("../images/icon_group.png");
+    background-position-x: center;
+    background-position-y: calc(50% - 10px);
+}
+
+.number_rooms {
+    background: no-repeat url("../images/icon_bed.png");
+    background-position-x: center;
+    background-position-y: calc(50% - 10px);
+}
+
+.number_bathrooms {
+    background: no-repeat url("../images/icon_bath.png");
+    background-position-x: center;
+    background-position-y: calc(50% - 10px);
+}
+
+.amenities {
+    padding-left: 0;
+    margin-top: 40px;
+    text-align: left;
+    width: 100%;
+}
+
+.amenities h2 {
+    font-size: 16px;
+    text-align: left;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.amenities ul,
+.amenities li {
+    list-style-type: none;
+    padding-left: 0px;
+    margin-top: 20px;
+}
+
+.amenities p {
+    margin-left: 30px;
+}
+
+.pet-icon,
+.tv-icon,
+.wifi-icon {
+    height: 20px;
+    width: 20px;
+    float: left;
+}
+
+.pet-icon {
+    background: no-repeat url("../images/icon_pets.png");
+    background-size: 20px;
+}
+
+.tv-icon {
+    background: no-repeat url("../images/icon_tv.png");
+    background-size: 20px;
+}
+
+.wifi-icon {
+    background: no-repeat url("../images/icon_wifi.png");
+    background-size: 20px;
+}
+
+.reviews {
+    margin-top: 40px;
+}
+
+.reviews h2 {
+    text-align: left;
+    font-size: 16px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.reviews li {
+    margin-left: -40px;
+    list-style-type: none;
+    text-align: left;
+}
+
+.reviews h3 {
+    margin: 0;
+    font-size: 14px;
+}
+
+.reviews p {
+    font-size: 12px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
